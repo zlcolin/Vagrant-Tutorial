@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# install package
+sudo apt-get update > /dev/null
+sudo apt-get install -y nginx
+
+# create virtual host
+if [ ! -f /etc/nginx/sites-available/app.conf ]; then
+	sudo cp /vagrant/shell/app.conf /etc/nginx/sites-available/
+	sudo ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
+fi
+
+# change configuration
+sudo sed -i 's/sendfile on;/sendfile off;/g' /etc/nginx/nginx.conf
+
+# restart nginx
+sudo service nginx restart

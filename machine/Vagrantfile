@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    # Base box
+    config.vm.box = "quantal32"
+    config.vm.box_url = "https://dl.dropboxusercontent.com/u/165709740/boxes/quantal32-vanilla.box"
+
+    # Network
+    config.vm.network :private_network, ip: "192.168.33.20"
+    
+    # Shared Folders
+    config.vm.synced_folder "../code", "/home/vagrant/app"
+
+    # Shell Provision
+    config.vm.provision :shell, :inline => "cd /vagrant; su vagrant ./shell/nginx"
+end
